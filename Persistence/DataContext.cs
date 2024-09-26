@@ -12,6 +12,6 @@ namespace Persistence
 
       }
 
-      public DbSet<Address> Addresses { get; set; }
+      public DbSet<Address> Addresses { get; set; } = default!;
    }
 }

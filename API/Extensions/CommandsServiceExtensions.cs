@@ -11,6 +11,7 @@ namespace API.Extensions
          services.AddScoped<ICreateAddressCommand, CreateAddressCommand>();
          services.AddScoped<IGetAddressesCommand, GetAddressesCommand>();
          services.AddScoped<IGetAddressCommand, GetAddressCommand>();
+         services.AddScoped<IUpdateAddressCommand, UpdateAddressCommand>();
 
          return services;
       }

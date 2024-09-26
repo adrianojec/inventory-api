@@ -11,16 +11,19 @@ namespace API.Controllers.Addresses
       private readonly ICreateAddressCommand _createAddressCommand;
       private readonly IGetAddressesCommand _getAddressesCommand;
       private readonly IGetAddressCommand _getAddressCommand;
+      private readonly IUpdateAddressCommand _updateAddressCommand;
       public AddressesController
       (
          ICreateAddressCommand createAddressCommand,
          IGetAddressesCommand getAddressesCommand,
-         IGetAddressCommand getAddressCommand
+         IGetAddressCommand getAddressCommand,
+         IUpdateAddressCommand updateAddressCommand
       )
       {
          _createAddressCommand = createAddressCommand;
          _getAddressesCommand = getAddressesCommand;
          _getAddressCommand = getAddressCommand;
+         _updateAddressCommand = updateAddressCommand;
       }
 
       [HttpPost]
@@ -53,6 +56,16 @@ namespace API.Controllers.Addresses
          if (!address.isSuccess) return BadRequest(address.Error);
 
          return Ok(new AddressViewModel(address.Value));
+      }
+
+      [HttpPut("{id}")]
+      public async Task<ActionResult> Update([FromRoute] Guid id, [FromBody] UpdateAddressInputModel input)
+      {
+         var address = await _updateAddressCommand.ExecuteCommand(input.ToUpdateAddressDto(id));
+
+         if (!address.isSuccess) return BadRequest(address.Error);
+
+         return Ok();
       }
    }
 }

@@ -30,9 +30,11 @@ namespace Application.Repositories.AddressRepositories
          return address;
       }
 
-      public Task Update(Address input)
+      public async Task Update(Address input)
       {
-         throw new NotImplementedException();
+         var address = await GetById(input.Id);
+         address = input;
+         await _context.SaveChangesAsync();
       }
 
       public Task Delete(Guid id)
